@@ -1,31 +1,37 @@
+using SolidBanking.Statement;
+using SolidBanking.TransactionLog;
+
 namespace SolidBanking;
 
-public sealed class BankAccount
+public sealed class BankAccount<TItem>
 {
-    private readonly List<(DateOnly, int)> _transactions = new();
     private readonly ICurrentDateProvider _currentDateProvider;
-    private readonly IStatementPrinter _statementPrinter;
+    private readonly IStatementPrinter<TItem> _statementPrinter;
+    private readonly ITransactionLog<TItem> _transactionLog;
 
-    public BankAccount(ICurrentDateProvider currentDateProvider, IStatementPrinter statementPrinter)
+    public BankAccount(
+        ICurrentDateProvider currentDateProvider,
+        IStatementPrinter<TItem> statementPrinter,
+        ITransactionLog<TItem> transactionLog
+    )
     {
         _currentDateProvider = currentDateProvider;
         _statementPrinter = statementPrinter;
+        _transactionLog = transactionLog;
     }
 
     public void Deposit(int amount)
     {
-        _transactions.Add((CurrentDate(), amount));
+        _transactionLog.Add(new Transaction(_currentDateProvider.CurrentDate(), amount));
     }
 
     public void Withdraw(int amount)
     {
-        throw new NotImplementedException();
+        _transactionLog.Add(new Transaction(_currentDateProvider.CurrentDate(), -amount));
     }
 
-    public string PrintStatement() => _statementPrinter.PrintStatement(_transactions);
-
-    private DateOnly CurrentDate()
+    public string PrintStatement()
     {
-        return _currentDateProvider.CurrentDate();
+        return _transactionLog.PrintStatement(_statementPrinter);
     }
 }

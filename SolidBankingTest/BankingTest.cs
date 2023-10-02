@@ -1,29 +1,35 @@
 using SolidBanking;
+using SolidBanking.Statement;
+using SolidBanking.TransactionLog;
 
 namespace SolidBankingTest;
 
 public class BankingTest
 {
     private readonly MockCurrentDateProvider _currentDateProvider;
-    private readonly BankAccount _bankAccount;
+    private readonly BankAccount<BalancedTransactionLog.IBalancedTransactionLine> _bankAccount;
 
     public BankingTest()
     {
         _currentDateProvider = new MockCurrentDateProvider();
-        _bankAccount = new BankAccount(_currentDateProvider, new TabbedStatementPrinter(new YmdDateFormatter()));
+        _bankAccount = new(
+            _currentDateProvider,
+            new TabbedStatementPrinter(),
+            new BalancedTransactionLog()
+        );
     }
 
     [Fact]
     public void PrintStatementReturnsOnlyHeadingWhenNoTransactions()
     {
         var statement = _bankAccount.PrintStatement();
-        
+
         Assert.Equal(
             "Date\tAmount\tBalance",
             statement
         );
     }
-    
+
     [Fact]
     public void PrintStatementReturnsDepositTransaction()
     {
@@ -31,14 +37,14 @@ public class BankingTest
         _bankAccount.Deposit(500);
 
         var statement = _bankAccount.PrintStatement();
-        
+
         Assert.Equal(
             "Date\tAmount\tBalance\n" +
             "2020-05-01\t+500\t500",
             statement
-            );
+        );
     }
-    
+
     [Fact]
     public void PrintStatementReturnsMultipleDepositTransactionsOnTheSameDay()
     {
@@ -47,7 +53,7 @@ public class BankingTest
         _bankAccount.Deposit(100);
 
         var statement = _bankAccount.PrintStatement();
-        
+
         Assert.Equal(
             "Date\tAmount\tBalance\n" +
             "2020-05-01\t+500\t500\n" +
@@ -55,7 +61,7 @@ public class BankingTest
             statement
         );
     }
-    
+
     [Fact]
     public void PrintStatementReturnsMultipleDepositTransactionsOnDifferentDays()
     {
@@ -65,7 +71,7 @@ public class BankingTest
         _bankAccount.Deposit(100);
 
         var statement = _bankAccount.PrintStatement();
-        
+
         Assert.Equal(
             "Date\tAmount\tBalance\n" +
             "2020-05-01\t+500\t500\n" +
@@ -73,7 +79,7 @@ public class BankingTest
             statement
         );
     }
-    
+
     [Fact]
     public void PrintStatementReturnsMultipleWithdrawelsTransactionsOnDifferentDays()
     {
@@ -83,7 +89,7 @@ public class BankingTest
         _bankAccount.Withdraw(100);
 
         var statement = _bankAccount.PrintStatement();
-        
+
         Assert.Equal(
             "Date\tAmount\tBalance\n" +
             "2020-05-01\t-500\t-500\n" +
@@ -91,6 +97,4 @@ public class BankingTest
             statement
         );
     }
-    
-    
 }
