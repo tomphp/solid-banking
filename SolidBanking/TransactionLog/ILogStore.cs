@@ -2,7 +2,7 @@ namespace SolidBanking.TransactionLog;
 
 public interface ILogStore<TItem>
 {
-    public void Add(TItem item);
+    void Add(TItem item);
 
-    public IEnumerable<TItem> Items { get; }
+    IEnumerable<TItem> Items { get; }
 }
