@@ -12,10 +12,10 @@ public class BankingTest
     public BankingTest()
     {
         _currentDateProvider = new MockCurrentDateProvider();
-        _bankAccount = new(
+        _bankAccount = new BankAccount<BalancedTransactionLog.IBalancedTransactionLine>(
             _currentDateProvider,
             new TabbedStatementPrinter(),
-            new BalancedTransactionLog()
+            new BalancedTransactionLog(new InMemoryLogStore<BalancedTransactionLog.BalancedTransaction>())
         );
     }
 
