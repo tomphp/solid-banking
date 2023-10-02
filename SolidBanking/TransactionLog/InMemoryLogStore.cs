@@ -1,6 +1,6 @@
 namespace SolidBanking.TransactionLog;
 
-public class InMemoryLogStore<TItem> : ILogStore<TItem>
+public sealed class InMemoryLogStore<TItem> : ILogStore<TItem>
 {
     private readonly List<TItem> _items = new();
 
