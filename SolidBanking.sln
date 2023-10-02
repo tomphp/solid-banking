@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidBanking", "SolidBanking\SolidBanking.csproj", "{92B5D10E-6667-451A-8BD8-51BCB545C5DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidBankingTest", "SolidBankingTest\SolidBankingTest.csproj", "{ECFA7573-29C7-4A42-83DF-0714738B7B3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92B5D10E-6667-451A-8BD8-51BCB545C5DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B5D10E-6667-451A-8BD8-51BCB545C5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B5D10E-6667-451A-8BD8-51BCB545C5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B5D10E-6667-451A-8BD8-51BCB545C5DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECFA7573-29C7-4A42-83DF-0714738B7B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECFA7573-29C7-4A42-83DF-0714738B7B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECFA7573-29C7-4A42-83DF-0714738B7B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECFA7573-29C7-4A42-83DF-0714738B7B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
