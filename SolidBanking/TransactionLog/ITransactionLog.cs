@@ -1,10 +1,6 @@
-using SolidBanking.Statement;
-
 namespace SolidBanking.TransactionLog;
 
-public interface ITransactionLog<out TItem>
+public interface ITransactionLog<in TTransaction>
 {
-    void Add(ITransaction transaction);
-
-    string PrintStatement(IStatementPrinter<TItem> statementPrinter);
+    void Add(TTransaction transaction);
 }

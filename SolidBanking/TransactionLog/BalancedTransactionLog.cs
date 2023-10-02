@@ -1,18 +1,12 @@
 using SolidBanking.Statement;
-using static SolidBanking.TransactionLog.BalancedTransactionLog;
 
 namespace SolidBanking.TransactionLog;
 
-public sealed class BalancedTransactionLog : ITransactionLog<IBalancedTransactionLine>
+public sealed class BalancedTransactionLog<TTransaction>
+    : ITransactionLog<TTransaction>, IStatement<IBalancedTransactionLine>
+    where TTransaction: ITransaction
 {
-    public interface IBalancedTransactionLine
-    {
-        DateOnly Date { get; }
-        int Amount { get; }
-        int Balance { get; }
-    }
-
-    public sealed record BalancedTransaction(int Balance, ITransaction Transaction)
+    public sealed record BalancedTransaction(int Balance, TTransaction Transaction)
         : IStatementLine<IBalancedTransactionLine>, IBalancedTransactionLine
     {
         public DateOnly Date => Transaction.Date;
@@ -32,7 +26,7 @@ public sealed class BalancedTransactionLog : ITransactionLog<IBalancedTransactio
         _store = store;
     }
 
-    public void Add(ITransaction transaction)
+    public void Add(TTransaction transaction)
     {
         _balance += transaction.Amount;
         _store.Add(new BalancedTransaction(_balance, transaction));

@@ -3,16 +3,17 @@ using SolidBanking.TransactionLog;
 
 namespace SolidBanking;
 
-public sealed class BankAccount<TItem>
+public sealed class BankAccount<TTransactionLog, TStatementLine>
+    where TTransactionLog: ITransactionLog<SimpleTransaction>, IStatement<TStatementLine>
 {
     private readonly ICurrentDateProvider _currentDateProvider;
-    private readonly IStatementPrinter<TItem> _statementPrinter;
-    private readonly ITransactionLog<TItem> _transactionLog;
+    private readonly IStatementPrinter<TStatementLine> _statementPrinter;
+    private readonly TTransactionLog _transactionLog;
 
     public BankAccount(
         ICurrentDateProvider currentDateProvider,
-        IStatementPrinter<TItem> statementPrinter,
-        ITransactionLog<TItem> transactionLog
+        IStatementPrinter<TStatementLine> statementPrinter,
+        TTransactionLog transactionLog
     )
     {
         _currentDateProvider = currentDateProvider;

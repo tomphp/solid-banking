@@ -1,4 +1,4 @@
-using static SolidBanking.TransactionLog.BalancedTransactionLog;
+using SolidBanking.TransactionLog;
 
 namespace SolidBanking.Statement;
 
