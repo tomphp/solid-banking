@@ -6,11 +6,11 @@ public sealed class TabbedStatementPrinter : IStatementPrinter<IBalancedTransact
 {
     private class TabbedStatementLinePrinter : IStatementLinePrinter<IBalancedTransactionLine>
     {
-        public string PrintStatementLine(IBalancedTransactionLine line)
-        {
-            var amount = line.Amount > 0 ? $"+{line.Amount}" : line.Amount.ToString();
-            return $"\n{line.Date.ToString("yyyy-MM-dd")}\t{amount}\t{line.Balance}";
-        }
+        public string PrintStatementLine(IBalancedTransactionLine line) =>
+            $"\n{line.Date.ToString("yyyy-MM-dd")}\t{SignedAmount(line)}\t{line.Balance}";
+
+        private static string SignedAmount(IBalancedTransactionLine line) =>
+            line.Amount > 0 ? $"+{line.Amount}" : line.Amount.ToString();
     }
 
     public string PrintStatement(IEnumerable<IStatementLine<IBalancedTransactionLine>> transactions) =>
