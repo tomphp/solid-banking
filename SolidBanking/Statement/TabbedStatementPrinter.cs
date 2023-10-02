@@ -13,11 +13,9 @@ public sealed class TabbedStatementPrinter : IStatementPrinter<BalancedTransacti
         }
     }
 
-    public string PrintStatement(IEnumerable<IStatementLine<BalancedTransactionLog.IBalancedTransactionLine>> transactions)
-    {
-        return transactions.Aggregate(
+    public string PrintStatement(IEnumerable<IStatementLine<BalancedTransactionLog.IBalancedTransactionLine>> transactions) =>
+        transactions.Aggregate(
             "Date\tAmount\tBalance",
             (current, transaction) => current + transaction.PrintStatementLine(new TabbedStatementLinePrinter())
         );
-    }
 }

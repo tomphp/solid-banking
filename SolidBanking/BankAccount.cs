@@ -20,18 +20,9 @@ public sealed class BankAccount<TItem>
         _transactionLog = transactionLog;
     }
 
-    public void Deposit(int amount)
-    {
-        _transactionLog.Add(new Transaction(_currentDateProvider.CurrentDate(), amount));
-    }
+    public void Deposit(int amount) => _transactionLog.Add(new Transaction(_currentDateProvider.CurrentDate(), amount));
 
-    public void Withdraw(int amount)
-    {
-        _transactionLog.Add(new Transaction(_currentDateProvider.CurrentDate(), -amount));
-    }
+    public void Withdraw(int amount) => _transactionLog.Add(new Transaction(_currentDateProvider.CurrentDate(), -amount));
 
-    public string PrintStatement()
-    {
-        return _transactionLog.PrintStatement(_statementPrinter);
-    }
+    public string PrintStatement() => _transactionLog.PrintStatement(_statementPrinter);
 }

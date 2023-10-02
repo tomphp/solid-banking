@@ -37,8 +37,6 @@ public sealed class BalancedTransactionLog : ITransactionLog<BalancedTransaction
         _store.Add(new BalancedTransaction(_balance, transaction));
     }
 
-    public string PrintStatement(IStatementPrinter<IBalancedTransactionLine> statementPrinter)
-    {
-        return statementPrinter.PrintStatement(_store.Items);
-    }
+    public string PrintStatement(IStatementPrinter<IBalancedTransactionLine> statementPrinter) =>
+        statementPrinter.PrintStatement(_store.Items);
 }

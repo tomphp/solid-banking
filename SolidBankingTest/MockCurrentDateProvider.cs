@@ -4,13 +4,7 @@ public sealed class MockCurrentDateProvider : ICurrentDateProvider
 {
     private DateOnly _date;
 
-    public DateOnly CurrentDate()
-    {
-        return _date;
-    }
+    public DateOnly CurrentDate() => _date;
 
-    public void SetCurrentDate(DateOnly date)
-    {
-        _date = date;
-    }
+    public void SetCurrentDate(DateOnly date) => _date = date;
 }
