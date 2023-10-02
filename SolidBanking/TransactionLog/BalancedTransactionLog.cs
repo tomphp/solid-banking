@@ -12,7 +12,7 @@ public sealed class BalancedTransactionLog : ITransactionLog<IBalancedTransactio
         int Balance { get; }
     }
 
-    public sealed record BalancedTransaction(int Balance, Transaction Transaction)
+    public sealed record BalancedTransaction(int Balance, ITransaction Transaction)
         : IStatementLine<IBalancedTransactionLine>, IBalancedTransactionLine
     {
         public DateOnly Date => Transaction.Date;
@@ -32,7 +32,7 @@ public sealed class BalancedTransactionLog : ITransactionLog<IBalancedTransactio
         _store = store;
     }
 
-    public void Add(Transaction transaction)
+    public void Add(ITransaction transaction)
     {
         _balance += transaction.Amount;
         _store.Add(new BalancedTransaction(_balance, transaction));
