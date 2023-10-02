@@ -1,8 +1,9 @@
 using SolidBanking.Statement;
+using static SolidBanking.TransactionLog.BalancedTransactionLog;
 
 namespace SolidBanking.TransactionLog;
 
-public sealed class BalancedTransactionLog : ITransactionLog<BalancedTransactionLog.IBalancedTransactionLine>
+public sealed class BalancedTransactionLog : ITransactionLog<IBalancedTransactionLine>
 {
     public interface IBalancedTransactionLine
     {

@@ -1,21 +1,22 @@
 using SolidBanking;
 using SolidBanking.Statement;
 using SolidBanking.TransactionLog;
+using static SolidBanking.TransactionLog.BalancedTransactionLog;
 
 namespace SolidBankingTest;
 
 public class BankingTest
 {
     private readonly MockCurrentDateProvider _currentDateProvider;
-    private readonly BankAccount<BalancedTransactionLog.IBalancedTransactionLine> _bankAccount;
+    private readonly BankAccount<IBalancedTransactionLine> _bankAccount;
 
     public BankingTest()
     {
         _currentDateProvider = new MockCurrentDateProvider();
-        _bankAccount = new BankAccount<BalancedTransactionLog.IBalancedTransactionLine>(
+        _bankAccount = new BankAccount<IBalancedTransactionLine>(
             _currentDateProvider,
             new TabbedStatementPrinter(),
-            new BalancedTransactionLog(new InMemoryLogStore<BalancedTransactionLog.BalancedTransaction>())
+            new BalancedTransactionLog(new InMemoryLogStore<BalancedTransaction>())
         );
     }
 

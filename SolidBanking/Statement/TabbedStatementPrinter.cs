@@ -1,19 +1,19 @@
-using SolidBanking.TransactionLog;
+using static SolidBanking.TransactionLog.BalancedTransactionLog;
 
 namespace SolidBanking.Statement;
 
-public sealed class TabbedStatementPrinter : IStatementPrinter<BalancedTransactionLog.IBalancedTransactionLine>
+public sealed class TabbedStatementPrinter : IStatementPrinter<IBalancedTransactionLine>
 {
-    private class TabbedStatementLinePrinter : IStatementLinePrinter<BalancedTransactionLog.IBalancedTransactionLine>
+    private class TabbedStatementLinePrinter : IStatementLinePrinter<IBalancedTransactionLine>
     {
-        public string PrintStatementLine(BalancedTransactionLog.IBalancedTransactionLine line)
+        public string PrintStatementLine(IBalancedTransactionLine line)
         {
             var amount = line.Amount > 0 ? $"+{line.Amount}" : line.Amount.ToString();
             return $"\n{line.Date.ToString("yyyy-MM-dd")}\t{amount}\t{line.Balance}";
         }
     }
 
-    public string PrintStatement(IEnumerable<IStatementLine<BalancedTransactionLog.IBalancedTransactionLine>> transactions) =>
+    public string PrintStatement(IEnumerable<IStatementLine<IBalancedTransactionLine>> transactions) =>
         transactions.Aggregate(
             "Date\tAmount\tBalance",
             (current, transaction) => current + transaction.PrintStatementLine(new TabbedStatementLinePrinter())
